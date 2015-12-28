@@ -1,0 +1,7 @@
+# how often monit runs in seconds
+set daemon 15
+
+set httpd port 2812 and
+    allow sa:monit
+
+include /etc/monit/conf.d/*

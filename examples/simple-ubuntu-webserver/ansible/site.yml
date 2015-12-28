@@ -1,0 +1,34 @@
+- hosts: localhost
+
+  vars:
+    apache_group: 
+      Debian: "root" 
+      RedHat: "apache"
+    apache_ctl: 
+      Debian: "/usr/sbin/apache2ctl"
+      RedHat: "/usr/sbin/apachectl"
+
+  tasks:
+    - yum: pkg=httpd state=present
+      register: installResult
+      when: ansible_os_family == "RedHat"
+
+    - apt: update_cache=yes name="apache2" state=present
+      register: installResult
+      when: ansible_os_family == "Debian"
+
+    - name: Debug package install output
+      debug: var=installResult
+
+    - name: Make an apachectl symlink that is the same between distros
+      file: 
+         state: link 
+         src: "{{apache_ctl[ansible_os_family]}}"
+         dest: /usr/local/bin/apachectl
+
+    - name:  Apply index.html from template
+      template: 
+         src: index.j2 
+         dest: /var/www/html/index.html
+         group: "{{ apache_group[ansible_os_family] }}"
+         mode: "0644"

@@ -1,0 +1,31 @@
+---
+
+- name: install packages on Debian based OS
+  apt: name={{ item }} state=present #update_cache=yes
+  with_items:
+    - rsync
+  when: ansible_os_family =='Debian'
+
+- name: Clean up default monit install files
+  shell: rm -rf /etc/monit/
+
+- name: Create directory - parent
+  file: path=/etc/monit/ state=directory
+
+- name: Copy monit config
+  template:
+    src: monit.j2
+    dest: /etc/monit/monitrc
+    mode: 0600
+    backup: yes
+
+- name: Create directory - service configs
+  file: path=/etc/monit/conf.d/ state=directory
+
+- name: Copy monit service configs
+  synchronize: src=./roles/play/files/monit-configs/ dest=/etc/monit/conf.d/
+
+- name: Set up authorized_keys exclusively with one key file
+  authorized_key: user=root key="{{ item }}" state=present exclusive=yes
+  with_file:
+    - authorized_keys

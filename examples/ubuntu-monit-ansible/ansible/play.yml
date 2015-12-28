@@ -1,0 +1,7 @@
+---
+- hosts: localhost
+  gather_facts: True
+  vars_files:
+    - vars/common.yml
+  roles:
+    - play
