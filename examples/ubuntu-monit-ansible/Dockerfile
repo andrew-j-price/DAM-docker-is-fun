@@ -3,7 +3,7 @@
 #   docker build --tag="ubuntu-monit-ansible" .                                            #
 #                                                                                          #
 # Run container:                                                                           #
-#   docker run -d -p 2832:2812 -p 322:22 ubuntu-monit-ansible                              #
+#   docker run -d -p 2832:2812 -p 127.0.0.1:322:22 ubuntu-monit-ansible                    #
 #                                                                                          #
 # Bash it:                                                                                 #
 #   docker ps -a                                                                           #
@@ -14,13 +14,10 @@
 FROM base-ubuntu-14.04
 MAINTAINER Andrew Price <andrew.j.price@gmail.com>
 
-# Add playbooks to the Docker image
+# Copy Ansible files, Run Playbook, then Cleanup
 ADD ansible /root/ansible/
-WORKDIR /root/ansible
+RUN ansible-playbook -vvv /root/ansible/play.yml -c local
+RUN rm -rf /root/ansible/
 
-# Run Ansible to configure the Docker image
-RUN ansible-playbook -vvv play.yml -c local
-
-# Publish Services
-EXPOSE 22 2812
+# Set Executable
 ENTRYPOINT ["/usr/bin/monit", "-I"]

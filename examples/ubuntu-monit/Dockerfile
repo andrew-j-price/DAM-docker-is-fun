@@ -3,7 +3,7 @@
 #   docker build --tag="ubuntu-monit" .                                                    #
 #                                                                                          #
 # Run container:                                                                           #
-#   docker run -d -p 2822:2812 -p 222:22 ubuntu-monit                                      #
+#   docker run -d -p 2822:2812 -p 127.0.0.1:222:22 ubuntu-monit                            #
 #                                                                                          #
 # Bash it:                                                                                 #
 #   docker ps -a                                                                           #
@@ -25,6 +25,5 @@ RUN mkdir /root/.ssh && chmod 700 /root/.ssh
 ADD authorized_keys /root/.ssh/
 RUN chmod 600 /root/.ssh/authorized_keys && chown root:root /root/.ssh/authorized_keys
 
-# Publish Services
-EXPOSE 22 2812
+# Set Executable
 ENTRYPOINT ["/usr/bin/monit", "-I"]
