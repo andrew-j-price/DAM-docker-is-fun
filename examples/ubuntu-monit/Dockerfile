@@ -1,16 +1,3 @@
-############################################################################################
-# Build image:                                                                             #
-#   docker build --tag="ubuntu-monit" .                                                    #
-#                                                                                          #
-# Run container:                                                                           #
-#   docker run -d -p 2822:2812 -p 127.0.0.1:222:22 ubuntu-monit                            #
-#                                                                                          #
-# Bash it:                                                                                 #
-#   docker ps -a                                                                           #
-#   docker exec -it <NameOrID> bash                                                        #
-#                                                                                          #
-############################################################################################
-
 FROM base-ubuntu-14.04
 MAINTAINER Andrew Price <andrew.j.price@gmail.com>
 

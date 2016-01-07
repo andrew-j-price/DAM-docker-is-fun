@@ -1,9 +1,3 @@
-###################################################################
-# Build image:                                                    #
-#   docker build --tag="base-centos-7" .                          #
-#                                                                 #
-###################################################################
-
 FROM centos:centos7
 MAINTAINER Andrew Price <andrew.j.price@gmail.com>
 

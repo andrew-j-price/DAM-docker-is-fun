@@ -1,9 +1,3 @@
-###################################################################
-# Build image:                                                    #
-#   docker build --tag="base-ubuntu-14.04" .                      #
-#                                                                 #
-###################################################################
-
 FROM ubuntu:14.04
 MAINTAINER Andrew Price <andrew.j.price@gmail.com>
 
