@@ -1,20 +1,22 @@
 ---
 
-- name: Update cache if greater than 3600 seconds (1 hour)
-  apt:
-    update_cache: yes
-    cache_valid_time: 3600
-
-- name: Install packages on Debian based OS
-  apt:
+- name: Install packages on RHEL based OS
+  yum:
     name: "{{ item }}"
     state: present
+    update_cache: yes
   with_items:
     - rsync
-  when: ansible_os_family =='Debian'
+
+- name: Create ssh server keys
+  command: "{{ item }}"
+  with_items:
+    - 'ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_ecdsa_key'
+    - 'ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key'
+    - 'ssh-keygen -q -N "" -t ed25519 -f /etc/ssh/ssh_host_ed25519_key'
 
 - name: Clean up default monit install files
-  shell: rm -rf /etc/monit/
+  shell: rm -rf /etc/monit.d/
 
 - name: Create directory - parent
   file:
@@ -24,7 +26,7 @@
 - name: Copy monit config
   template:
     src: monit.j2
-    dest: /etc/monit/monitrc
+    dest: /etc/monitrc
     mode: 0600
     backup: yes
 
@@ -34,7 +36,7 @@
     state: directory
 
 - name: Copy monit service configs
-  synchronize:
+  synchronize: 
     src: ./roles/play/files/monit-configs/
     dest: /etc/monit/conf.d/
 

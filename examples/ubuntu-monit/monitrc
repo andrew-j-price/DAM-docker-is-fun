@@ -2,6 +2,6 @@
 set daemon 15
 
 set httpd port 2812 and
-    allow sa:monit
+    allow monit:monit
 
 include /etc/monit/conf.d/*
