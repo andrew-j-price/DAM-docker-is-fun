@@ -14,8 +14,8 @@ docker rm `docker ps --no-trunc -aq`
 
 echo ''
 echo '# starting up fresh containers'
-docker run -d -p 2822:2812 -p 127.0.0.1:222:22 centos-monit-ansible
-docker run -d -p 2832:2812 -p 127.0.0.1:322:22 ubuntu-monit-ansible
+docker run -d -p 2822:2812 -p 127.0.0.1:222:22 dam-centos
+docker run -d -p 2832:2812 -p 127.0.0.1:322:22 dam-ubuntu
 
 echo ''
 echo '# docker ps -a'
