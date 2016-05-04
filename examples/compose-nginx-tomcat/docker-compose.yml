@@ -1,0 +1,28 @@
+lb:
+  image: nginx
+  ports:
+   - "8080:80"
+  volumes:
+   - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+  links:
+   - web01:tomcat01
+   - web02:tomcat02
+   - web03:tomcat03
+web01:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT
+web02:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT
+web03:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT
