@@ -1,0 +1,27 @@
+haproxy:
+  image: haproxy:1.5
+  ports:
+   - "1936:1936"
+   - "8080:8080"
+  volumes:
+   - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+  links:
+   - tomcat
+tomcat:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/mysql-sample:/usr/local/tomcat/webapps/ROOT
+  links:
+   - mariadb
+mariadb:
+  image: mariadb
+  environment:
+   - MYSQL_DATABASE=tomcat-sample
+   - MYSQL_USER=root
+   - MYSQL_ROOT_PASSWORD=Password123
+   - TERM=dumb
+  volumes:
+   - /var/container-data/mariadb:/var/lib/mysql:rw
+   - ./mariadb/schema.sql:/docker-entrypoint-initdb.d/schema.sql:ro

@@ -1,0 +1,29 @@
+lb:
+  image: haproxy:1.5
+  ports:
+   - "1936:1936"
+   - "8080:8080"
+  volumes:
+   - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg
+  links:
+   - web01
+   - web02
+   - web03
+web01:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT
+web02:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT
+web03:
+  image: tomcat
+  volumes:
+   - ./tomcat/server.xml:/usr/local/tomcat/conf/server.xml
+   - ./tomcat/tomcat-users.xml:/usr/local/tomcat/conf/tomcat-users.xml
+   - ./tomcat/ROOT:/usr/local/tomcat/webapps/ROOT
