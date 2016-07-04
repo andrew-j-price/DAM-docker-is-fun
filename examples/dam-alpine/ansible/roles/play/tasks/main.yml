@@ -1,0 +1,47 @@
+---
+
+- name: Create ssh server keys
+  command: "{{ item }}"
+  with_items:
+    - 'ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_ecdsa_key'
+    - 'ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key'
+    - 'ssh-keygen -q -N "" -t ed25519 -f /etc/ssh/ssh_host_ed25519_key'
+
+- name: Clean up default monit install files
+  command: rm -rf /etc/monit.d/
+
+- name: Create directory - parent
+  file:
+    path: /etc/monit/
+    state: directory
+
+- name: Copy monit config
+  template:
+    src: monit.j2
+    dest: /etc/monitrc
+    mode: 0600
+    backup: no
+
+- name: Create directory for monit service configs
+  file:
+    path: /etc/monit.d/
+    state: directory
+
+- name: Copy monit service configs
+  copy:
+    src: "{{ item }}"
+    dest: "/etc/monit.d/"
+    backup: no
+  with_items:
+    - "monit-configs/fs_root.conf"
+    - "monit-configs/sshd.conf"
+    - "monit-configs/system.conf"
+
+- name: Add ssh public key
+  authorized_key:
+    user: root
+    key: "{{ item }}"
+    state: present
+    exclusive: yes
+  with_file:
+    - id_rsa.pub

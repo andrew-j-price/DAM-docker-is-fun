@@ -13,7 +13,7 @@ Learning is fun and so is Docker.  Therefore I came up with some scenarios on ho
   - Run "run.sh"
 
 ### Base-Images Folder
-This folder contains the base CentOS and Ubuntu images configured with a bunch of tools that can come in handy.  Of course if you don't want to use any of these tools, you can easily remove them or add others as you please.  While adding a bunch of extra utilities may not align with container best practices, it sure does help make learning about containers easier.
+This folder contains the base Alpine, CentOS, and Ubuntu images configured with a bunch of tools that can come in handy.  Of course if you don't want to use any of these tools, you can easily remove them or add others as you please.  While adding a bunch of extra utilities may not align with container best practices, it sure does help make learning about containers easier.
 
 ### Examples Folder
-This folder is kind of self-explanatory.  The "dam-centos" and "dam-ubuntu" are two pretty cool projects that will allow your containers to be provisioned via Ansible, controlled via Monit, run sshd, and as many other processes as you like.
+This folder is kind of self-explanatory.  The "dam-alpine", "dam-centos", and "dam-ubuntu" are pretty cool projects that will allow your containers to be provisioned via Ansible, controlled via Monit, run sshd, and as many other processes as you like.
